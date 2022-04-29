@@ -16,18 +16,19 @@ public class DragSystem : MonoBehaviour
     private DragableItem item;
 
     void Awake() {
-        Cursor.lockState = CursorLockMode.Locked;
+        // Cursor.lockState = CursorLockMode.Locked;
+        Cursor.SetCursor(Texture2D.redTexture, Vector2.zero, CursorMode.Auto);
     }
 
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
     void Update() {
         if (item != null) {
-            renderer.DrawTraiectory(slot.position, slot.rotation*new Vector3(0, 0, velocity));
+            this.renderer.DrawTraiectory(slot.position, slot.rotation*new Vector3(0, 0, velocity));
         }
     }
 
@@ -40,17 +41,17 @@ public class DragSystem : MonoBehaviour
         }
 
         Ray ray = headCamera.ViewportPointToRay(new Vector2(.5f, .5f));
-	    RaycastHit hit;
+        RaycastHit hit;
         if (Physics.Raycast(ray, out hit, 5f)) {
-		    DragableItem item = hit.transform.GetComponent<DragableItem>();
-		    if (item != null) {
+            DragableItem item = hit.transform.GetComponent<DragableItem>();
+            if (item != null) {
                 DragItem(item);
-		    }
-	    }
+            }
+        }
     }
 
     void DragItem(DragableItem item) {
-        this.item = item; 
+        this.item = item;
         item.Rigidbody.isKinematic = true;
         item.Rigidbody.velocity = Vector3.zero;
         item.transform.parent = slot;

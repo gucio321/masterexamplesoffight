@@ -32,17 +32,20 @@ public class PlayerController : MonoBehaviour
 
     private void OnLook(InputValue inputValue)
     {
-        Vector2 value = inputValue.Get<Vector2>();
+        var value = inputValue.Get<Vector2>();
         if(value.x != 0)
         {
-            transform.Rotate(0, value.x, 0);
+            this.transform.Rotate(0, value.x, 0);
         }
-        if(value.y != 0)
+
+        if (value.y == 0)
         {
-            headRotation.x += -value.y;
-            headRotation.x = Mathf.Clamp(headRotation.x, -90, 90);
-            head.localRotation = Quaternion.Euler(headRotation);
+            return;
         }
+
+        this.headRotation.x += -value.y;
+        this.headRotation.x = Mathf.Clamp(this.headRotation.x, -90, 90);
+        this.head.localRotation = Quaternion.Euler(this.headRotation);
     }
 
     private void OnMove(InputValue inputValue)
